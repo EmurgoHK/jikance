@@ -1,114 +1,211 @@
-# Wekan - Open Source kanban
+# Jikance
+An experement in decentralised team organisation.
+## The problem
+Executing solutions to multiple types of problems (and tracking their state) across teams is subject to Amdahl's Law. Jikance is an experiment in combining parts of the GTD methodology with Kanban and the C4.
 
-[![Contributors](https://img.shields.io/github/contributors/wekan/wekan.svg "Contributors")](https://github.com/wekan/wekan/graphs/contributors)
-[![Docker Repository on Quay](https://quay.io/repository/wekan/wekan/status "Docker Repository on Quay")](https://quay.io/repository/wekan/wekan)
-[![Docker Hub container status](https://img.shields.io/docker/build/wekanteam/wekan.svg "Docker Hub container status")](https://hub.docker.com/r/wekanteam/wekan)
-[![Docker Hub pulls](https://img.shields.io/docker/pulls/wekanteam/wekan.svg "Docker Hub Pulls")](https://hub.docker.com/r/wekanteam/wekan)
-[![Wekan Build Status][travis_badge]][travis_status]
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/02137ecec4e34c5aa303f57637196a93 "Codacy Badge")](https://www.codacy.com/app/xet7/wekan?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=wekan/wekan&amp;utm_campaign=Badge_Grade)
-[![Code Climate](https://codeclimate.com/github/wekan/wekan/badges/gpa.svg "Code Climate")](https://codeclimate.com/github/wekan/wekan)
-[![Project Dependencies](https://david-dm.org/wekan/wekan.svg "Project Dependencies")](https://david-dm.org/wekan/wekan)
-[![Code analysis at Open Hub](https://img.shields.io/badge/code%20analysis-at%20Open%20Hub-brightgreen.svg "Code analysis at Open Hub")](https://www.openhub.net/p/wekan)
+## The solution
+This is not a solution, it is an experiment. A solution may eventuate.
 
-## [Translate Wekan at Transifex](https://transifex.com/wekan/wekan)
+<details>
+  <summary>How to run Jikance locally</summary>
+<p>
+problem: this README comes from Cardanoupdate and has not yet been updated to Jikance.
 
-Translations to non-English languages are accepted only at [Transifex](https://transifex.com/wekan/wekan) using webbrowser.
-New English strings of new features can be added as PRs to edge branch file wekan/i18n/en.i18n.json .
+#### Install Meteor   
+```
+curl https://install.meteor.com/ | sh
+```
 
-## [Wekan feature requests and bugs](https://github.com/wekan/wekan/issues)
+#### Clone repository    
+```
+git clone https://github.com/EmurgoHK/cardanoupdate.git
+```
 
-Please add most of your questions as GitHub issue: [Wekan feature requests and bugs](https://github.com/wekan/wekan/issues).
-It's better than at chat where details get lost when chat scrolls up.
+Note: if you want to edit things and send a pull request you should _fork_ this project on Github first and clone _your_ fork instead of https://github.com/EmurgoHK/cardanoupdate.git.
 
-## Chat
+#### Install Dependencies   
+```
+meteor npm install
+```
 
-[![Wekan Vanila Chat][vanila_badge]][vanila_chat] - Most Wekan community and developers are here at #wekan chat channel.
-Use webbrowser to register, and after that you can also alternatively use mobile app Rocket.Chat by Rocket.Chat with
-address https://chat.vanila.io and same username and password.
+#### Run meteor
+`npm start`
+(use `npm run prod` to minify everything and simulate production speeds)
+(use `npm run debug` to start Meteor in debug mode)
 
-[Wekan IRC FAQ](https://github.com/wekan/wekan/wiki/IRC-FAQ)
+If Meteor starts but you get a white screen:
+```
+meteor npm install --save core-js
+```
 
-## FAQ
 
-**NOTE**: 
-- Please read the [FAQ](https://github.com/wekan/wekan/wiki/FAQ) first
-- Please don't feed the trolls and spammers that are mentioned in the FAQ :)
+If you already have the database but want to update it to the latest version, do a `meteor reset` before running the above.
 
-## About Wekan
 
-Wekan is an completely [Open Source][open_source] and [Free software][free_software]
-collaborative kanban board application with MIT license.
+#### Email Setup   
+Create new file `.env` in project root and add `MAIL_URL`
 
-Whether you’re maintaining a personal todo list, planning your holidays with some friends, or working in a team on your next revolutionary idea, Kanban boards are an unbeatable tool to keep your things organized. They give you a visual overview of the current state of your project, and make you productive by allowing you to focus on the few items that matter the most.
+Example for sendgrid email
 
-Since Wekan is a free software, you don’t have to trust us with your data and can
-install Wekan on your own computer or server. In fact we encourage you to do
-that by providing one-click installation on various platforms.
+```
+MAIL_URL = smtp://user:pass@smtp.sendgrid.net:587
+```
 
-- [Features][features]: Wekan has real-time user interface. Not all features are implemented, yet.
-- [Platforms][platforms]: Wekan supports many platforms and plan is to add more. This will be the first place to look if you want to **install** it, test out and learn more in depth.
-- [Integrations][integrations]: Current possible integrations and future plans.
-- [Team](https://github.com/wekan/wekan/wiki/Team): The people who spends their time and make Wekan into what it is right now.
+#### Mongo errors   
+If Mongo exists with status 1:
+Quick fix: `export LC_ALL=C`   
+Proper fix: something is wrong with your OS locales, good luck.
 
-## Roadmap
+#### Meteor errors
+If you do a `git pull` and Meteor doesn't start, the first thing to do is run `meteor npm install` as there may be package updates.
 
-[Roadmap](https://github.com/wekan/wekan/wiki/Roadmap)
+</p>
+</details>    
 
-Upcoming Wekan App Development Platform will make possible many use cases. If you don't find your feature or integration in
-GitHub issues and [Features][features] or [Integrations][integrations] page at wiki, please add them.
 
-We are very welcoming to new developers and teams to submit new pull requests to devel branch to make this Wekan App Development Platform possible faster. Please see [Developer Documentation][dev_docs] to get started.
+### Authentication
+To enable Authentication either configure OAuth or copy the following code in the browser console to create a test user: 
+<code>
+    Accounts.createUser({
+      username: 'testing',
+      password: 'testing',
+      email: 'testing@testing.test',
+      profile: {
+           name: 'Tester'
+      }
+    })
+</code>
+Now you will be logged in as a Test user.
 
-We also welcome sponsors for features and bugfixes. By working directly with Wekan you get the benefit of active maintenance and new features added by growing Wekan developer community.
 
-Actual work happens at [Wekan GitHub issues][wekan_issues].
+## Contributing to Cardanoupdate    
+A cardinal sin that many open source developers make is to place themselves above others. "I founded this project thus my intellect is superior to that of others". It's immodest and rude, and usually inaccurate. The contribution policy we use at Cardanoupdate applies equally to everyone, without distinction.    
 
-See [Development links on Wekan wiki](https://github.com/wekan/wekan/wiki#Development) bottom of the page for more info.
+The contribution policy we follow is the [Collective Code Construction Contract (C4)](/CONTRIBUTING.MD)    
 
-If you want to know what is going on exactly this moment, you can check out the [project page](https://github.com/wekan/wekan/projects/2).
+If you're wondering why any of the rules in the C4 are there, take a look at the [line by line explanation](/DESCRIPTIVE_C4.MD) of everything in the C4, this explains the rationale and history behind everything in the protocol and makes it easier to understand.
 
-## Demo
+As this is a new project without a strong pull request histroy, you should take a look at past [pull requests from Blockrazor](https://github.com/Blockrazor/blockrazor/pulls?q=is%3Apr+is%3Aclosed) to see how to do things. You may also want to look at the [bad pull request role of honour](https://github.com/Blockrazor/blockrazor/issues?utf8=✓&q=label%3A"Bad+Pull+Request+Role+of+Honour") to see how _not_ to send a pull request.    
 
-[Wekan demo][roadmap_wefork]
+Want to see server logs? Go [here](https://fixme.fixme/static/log.txt).
 
-## Screenshot
+The project style guide is [here](/STYLES.md).
 
-[More screenshots at Features page](https://github.com/wekan/wekan/wiki/Features)
 
-[![Screenshot of Wekan][screenshot_wefork]][roadmap_wefork]
+<details>
+  <summary>Step-by-step guide to sending a pull request</summary>
+<p>
 
-## Stable
+0. Read the [contribution protocol](/CONTRIBUTING.MD) and the [line by line explanation](/DESCRIPTIVE_C4.MD) of the protocol.    
+1. Fork this github repository under your own github account.    
+2. Clone _your_ fork locally on your development machine.   
+3. Choose _one_ problem to solve. If you aren't solving a problem that's already in the issue tracker you should describe the problem there (and your idea of the solution) first to see if anyone else has something to say about it (maybe someone is already working on a solution, or maybe you're doing somthing wrong).
 
-- master+devel branch. At release, devel is merged to master.
-- Receives fixes and features that have been tested at edge that they work.
-- If you want automatic updates, [use Snap](https://github.com/wekan/wekan-snap/wiki/Install).
-- If you want to test before update, [use Docker quay.io release tags](https://github.com/wekan/wekan/wiki/Docker).
+**It is important to claim the issue you want to work on so that others don't work on the same thing. Make a comment in the issue: `@emurgobot claim` before you start working on the issue.**    
 
-## Edge
+If at some point you want to abandon the issue and let someone else have a go, comment: @emurgobot abandon.
 
-- edge branch. All new fixes and features are added to here first. [Testing Edge](https://github.com/wekan/wekan-snap/wiki/Snap-Developer-Docs).
+4. Add the Cardanoupdate repository as an upstream source and pull any changes:    
+```
+@: git remote add upstream git://github.com/EmurgoHK/cardanoupdate //only needs to be done once
+@: git checkout master //just to make sure you're on the correct branch
+@: git pull upstream master //this grabs any code that has changed, you want to be working on the latest 'version'
+@: git push //update your remote fork with the changes you just pulled from upstream master
+```
+5. Create a local branch on your machine `git checkout -b branch_name` (it's usually a good idea to call the branch something that describes the problem you are solving). _Never_ develop on the `master` branch, as the `master` branch is exclusively used to accept incoming changes from `upstream:master` and you'll run into problems if you try to use it for anything else.
+6. Solve the problem in the absolute most simple and fastest possible way with the smallest number of changes humanly possible. Tell other people what you're doing by putting _very clear and descriptive comments in your code every 2-3 lines_.    
+Add your name to the AUTHORS file so that you become a part owner of Cardanoupdate.    
+7. Commit your changes to your own fork:
+Before you commit changes, you should check if you are working on the latest version (again). Go to the github website and open _your_ fork of Emurigs, it should say _This branch is even with cardanoupdate:master._    
+If **not**, you need to pull the latest changes from the upstream Cardanoupdate repository and replay your changes on top of the latest version:
+```
+@: git stash //save your work locally
+@: git checkout master
+@: git pull upstream master
+@: git push
+@: git checkout -b branch_name_stash
+@: git stash pop //_replay_ your work on the new branch which is now fully up to date with the Cardanoupdate repository
+```
+
+Note: after running `git stash pop` you should run Meteor and look over your code again and check that everything still works as sometimes a file you worked on was changed in the meantime.
+
+Now you can add your changes:   
+```
+@: git add changed_file.js //repeat for each file you changed
+```
+
+And then commit your changes:
+```
+@: git commit -m 'problem: <50 characters describing the problem //do not close the '', press ENTER two (2) times
+>
+>solution: short description of how you solved the problem.' //Now you can close the ''. Be sure to mention the issue number if there is one (e.g. #6)    
+@: git push //this will send your changes to _your_ fork on Github
+```    
+8. Go to your fork on Github and select the branch you just worked on. Click "pull request" to send a pull request back to the Cardanoupdate repository.
+9. Send the pull request, be sure to mention the issue number with a # symbol at the front (e.g. #1014).  
+10. Go back to the issue, and make a comment: `@emurgobot label "done"`. This will label this issue as complete, and everyone can test your solution and close the issue if it solves the problem.
+
+#### What happens after I send a pull request?    
+If your pull request contains a correct patch (read the C4) a maintainer will merge it.    
+If you want to work on another problem while you are waiting for it to merge simply repeat the above steps starting at:    
+```
+@: git checkout master
+```
+
+#### Tests
+To run tests:
+```
+meteor test --driver-package practicalmeteor:mocha
+```
+
+You should generally write a test for anything you don't want to break later, otherwise it will probably end up being broken by someone. We use [Mocha + Chai](https://guide.meteor.com/testing.html#mocha) for testing. You can see an example in [this](https://github.com/Blockrazor/blockrazor/pull/378/files) pull request.
+
+Detailed guide on how to run tests in your local environment is available [here](https://github.com/EmurgoHK/cardanoupdate/blob/master/docs/TESTING.md).
+</p>
+</details>    
+
+<details>
+  <summary>Can I be paid to contribute to Cardanoupdate?</summary>
+<p>
+
+Yes, this is sometimes possible.
+
+Your first step is to _very carefully read and understand everything above_, including the linked files, then start fixing problems and sending pull requests!
+
+If your code is amazing and brilliant but you don't understand the contribution process we cannot consider you for a paid position.
+
+Make sure you follow the project on Github so you get updates.
+
+Contact the Cardanoupdate BDFL (Benevolent Dictator For Life): gareth AT emurgo.io if you've been contributing code to Cardanoupdate and want to keep doing it but you are hungry.
+
+</p>
+</details>
+
+
+<details>
+  <summary>Rules for paid contributors</summary>
+<p>
+
+0. Write tests for your code so that people don't break it later. We use We use [Mocha + Chai](https://guide.meteor.com/testing.html#mocha) for testing. You can see an example in [this](https://github.com/Blockrazor/blockrazor/pull/378/files) pull request.
+
+1. Engage in discussion about problems even if you aren't working on them yourself. Be helpful to other contributors, many are volunteers who just want to be part of the project. You (should) have a pretty good understanding of the codebase and can probably save others a lot of time.
+
+2. Your code should be _very_ well commented and easy to read. It should be immediately clear what your code is doing. You should be able to look at your code a year later, in the morning before coffee, and immediately know what it's doing. Write code and comments like you are teaching someone else how to do what you're doing.
+
+3. Your pull requests should be a glowing example to others of how to work with the C4. Each one should be a model that others can refer to.
+
+4. In an ideal world, you would be able to work on any issue you want and there would be no need to assign tasks so that our budget is kept under control. This would be possible because you would always work on the the problems that are _really_ worth solving _right now_ to get to some form of MVP. We can't predict the future, there are no plans or roadmaps (these are not compatible with the C4). Cardanoupdate grows through evolution not intelligent design or central planning. So if something isn't an in-your-face problem right now, it may never be, we could end up going down a totally different road before we get to it. While we want to avoid technical debt, we also don't want to be working on things that will someday maybe become a problem if Cardanoupdate becomes a thing. Demonstrate that we can trust _your_ own judgement on what you should be working on and what's worth spending time on.
+</p>
+</details>
 
 ## License
+The license and contribution policy are two halves of the same puzzle. This project is licensed under the [MPL v2.0 license](LICENSE). The code is owned (and Copyright) by _all_ contributors. Contributors are listed in the [AUTHORS](/AUTHORS.md) file. Please add your name to the end of this file in your first pull request so that you also become an owner.
 
-Wekan is released under the very permissive [MIT license](LICENSE), and made
-with [Meteor](https://www.meteor.com).
+This license ensures that:
+1. Contributors to Cardanoupdate cannot have their code stolen and used by closed-source projects without their permission. It's very common for corporate software merchants to steal code from open source projects and use it in their closed source or even patented products and services in direct competition with the original project. For example, anyone who contributes code to a project released under a BSD/MIT style license effectively has no rights to their own code or any improvements made upon it.
+2. Anyone using any code from Cardanoupdate must also share their work under a _share-alike_ license so that anyone else can use their improvements.
+3. No one can change the above, without explicit written permission from _all_ contributors, which is essentially impossible to get. That means even the founder of this project cannot ever relicense and sell Cardanoupdate and its code. It belongs to everyone who contributed to it (and it always will).
 
-[platforms]: https://github.com/wekan/wekan/wiki/Platforms
-[dev_docs]: https://github.com/wekan/wekan/wiki/Developer-Documentation
-[screenshot_wekan]: http://i.imgur.com/cI4jW2h.png
-[screenshot_wefork]: https://wekan.github.io/wekan-markdown.png
-[features]: https://github.com/wekan/wekan/wiki/Features
-[integrations]: https://github.com/wekan/wekan/wiki/Integrations
-[roadmap_wekan]: http://try.wekan.io/b/MeSsFJaSqeuo9M6bs/wekan-roadmap
-[roadmap_wefork]: https://wekan.indie.host/b/t2YaGmyXgNkppcFBq/wekan-fork-roadmap
-[wekan_issues]: https://github.com/wekan/wekan/issues
-[wefork_issues]: https://github.com/wefork/wekan/issues
-[docker_image]: https://hub.docker.com/r/wekanteam/wekan/
-[travis_badge]: https://travis-ci.org/wekan/wekan.svg?branch=devel
-[travis_status]: https://travis-ci.org/wekan/wekan
-[wekan_wiki]: https://github.com/wekan/wekan/wiki
-[translate_wekan]: https://www.transifex.com/wekan/wekan/
-[open_source]: https://en.wikipedia.org/wiki/Open-source_software
-[free_software]: https://en.wikipedia.org/wiki/Free_software
-[vanila_badge]: https://vanila.io/img/join-chat-button2.png
-[vanila_chat]: https://chat.vanila.io/channel/wekan
+It is not permissible to use _any_ code from this codebase in _anything_ that isn't using a _share-alike_ license. Violations of the license will absolutely not be tolerated, and the terms of this license will be _brutally_ enforced through a variety of _very_ creative methods.
+
+
